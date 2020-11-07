@@ -22,6 +22,10 @@ body {
   height: 100%;
 }
 
+td {
+  font-weight: bold;
+}
+
 body {
   display: -ms-flexbox;
   display: -webkit-box;
@@ -82,7 +86,7 @@ button {
       <img class="mb-4" src="https://i.ibb.co/vPnqM21/Pin-Clipart-com-resume-clipart-5230227.png" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">CV Arama Motoru</h1>
       <label for="search" class="sr-only">Nasıl bir çalışan istersin</label>
-      <input type="text" id="search" name="search" class="form-control" placeholder="Flutter ile deneyimli, istanbulda oturan bir freelancer çalışan" required autofocus>
+      <input type="text" id="search" value="{{soru}}" name="search" class="form-control" placeholder="Flutter ile deneyimli, istanbulda oturan bir freelancer çalışan" required autofocus>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Ara</button>
       <p class="mt-5 mb-3 text-muted"></p>
     </form>
@@ -91,16 +95,20 @@ button {
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Score</th>
+            <th scope="col">#</th>
+            <th scope="col">Benzerlik</th>
+            <th scope="col">Bulunanlar</th>
             <th scope="col">CV</th>
         </tr>
         </thead>
         <tbody>
 
             {% for cv_score in cv_scores %}
-        <tr>
-            <td>{{ cv_score[0] }}</td>
-            <td>{{ cv_score[1] }}</td>
+        <tr {% if cv_score[0] >= 50 %}{% endif %}>
+            <th scope="row">{{ loop.index0 }} </th>
+            <td     {% if cv_score[0] >= 66 %}style="color:green"{% endif %}    {% if cv_score[0] < 33 %}style="color:red"{% endif %}   >%{{ cv_score[0] }} Benzerlik</td>
+            <td>{% for entity in cv_score[2] %}{{entity}}✅  - {% endfor %} {% for entity in cv_score[3] %}{{entity}}❌ {% endfor %}</td>
+            <td><a href="cv_goruntule?cv={{ cv_score[1][7:] }}">{{ cv_score[1][7:-4] }}</td>
         </tr>
             {% endfor %}
 
