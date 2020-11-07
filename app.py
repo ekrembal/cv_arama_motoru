@@ -22,9 +22,9 @@ def get_cv_texts():
 def cv_goruntule():
     filename = request.args.get('cv')
     if id is not None:
-        print(os.path.join('cv_ler', filename))
+        # print(os.path.join('cv_ler', filename))
         binary_pdf = open(os.path.join('cv_ler', filename), 'rb').read()
-        print(binary_pdf)
+        # print(binary_pdf)
         response = make_response(binary_pdf)
         response.headers['Content-Type'] = 'application/pdf'
         response.headers['Content-Disposition'] = \
